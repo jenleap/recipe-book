@@ -6,7 +6,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from .models import Recipe, Food
-from .serializer import RecipeSerializer, FoodSerializer
+from .serializer import RecipeSerializer, FoodSerializer, UserSerializer, UserSerializerWithToken
 
 # Create your views here.
 
@@ -23,8 +23,10 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
 
-        data['username'] = self.user.username
-        data['email'] = self.user.email
+        serializer = UserSerializerWithToken(self.user).data
+
+        for k, v in serializer.items():
+            data[k] = v
 
         return data
 
@@ -38,6 +40,12 @@ def getRoutes(request):
         'api/recipes/<id>'
     ]
     return Response(routes)
+
+@api_view(['GET'])
+def getUserProfile(request):
+    user = request.user
+    serializer = UserSerializer(user, many=False)
+    return Response(serializer.data)
 
 @api_view(['GET'])
 def getRecipes(request):
