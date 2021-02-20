@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import JsonResponse
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -10,8 +9,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 from django.contrib.auth.hashers import make_password
 
-from .models import Recipe, Food
-from .serializer import RecipeSerializer, FoodSerializer, UserSerializer, UserSerializerWithToken
+from base.serializer import UserSerializer, UserSerializerWithToken
 
 # Create your views here.
 
@@ -45,7 +43,7 @@ def registerUser(request):
     try:
         user = User.objects.create(
             first_name=data['name'],
-            username=data['email'],
+            username=data['username'],
             email=data['email'],
             password=make_password(data['password'])
         )
@@ -61,22 +59,3 @@ def getUserProfile(request):
     user = request.user
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
-
-@api_view(['GET'])
-def getRecipes(request):
-    recipes = Recipe.objects.all()
-    serializer = RecipeSerializer(recipes, many=True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-def getRecipe(request, pk):
-    recipe = Recipe.objects.get(id=pk)
-    serializer = RecipeSerializer(recipe, many=False)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-def getFoods(request):
-    foods = Food.objects.all()
-    serializer = FoodSerializer(foods, many=True)
-    return Response(serializer.data)
-
