@@ -17,8 +17,8 @@ export const getRecipes = () => (dispatch) => {
             .catch(err => {
                 dispatch({
                     type: RECIPE_LIST_FAILURE,
-                    payload: err.response && err.response.data.message
-                    ? err.response.data.message
+                    payload: err.response && err.response.data.detail
+                    ? err.response.data.detail
                     : err.message
                 });
             });
@@ -39,8 +39,8 @@ export const getRecipe = (id) => (dispatch) => {
             .catch(err => {
                 dispatch({
                     type: RECIPE_DETAILS_FAILURE,
-                    payload: err.response && err.response.data.message
-                    ? err.response.data.message
+                    payload: err.response && err.response.data.detail
+                    ? err.response.data.detail
                     : err.message
                 });
             });

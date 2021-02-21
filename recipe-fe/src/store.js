@@ -3,15 +3,22 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { recipeListReducer, recipeDetailsReducer } from './reducers/recipeReducers';
-import { foodsListReducer } from './reducers/foodReducer';
+import { foodsListReducer } from './reducers/foodReducers';
+import { userLoginReducer } from './reducers/userReducers';
 
 const reducer = combineReducers({
     recipeList: recipeListReducer,
     recipeDetails: recipeDetailsReducer,
-    foodsList: foodsListReducer
+    foodsList: foodsListReducer,
+    userLogin: userLoginReducer
 });
 
-const initialState = {};
+const userInfoFromStorage = localStorage.getItem('userInfo') ?
+    JSON.parse(localStorage.getItem('userInfo')) : null;
+
+const initialState = {
+    userLogin: { userInfo: userInfoFromStorage }
+};
 
 const middleware = [thunk];
 
