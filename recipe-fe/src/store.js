@@ -4,13 +4,14 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { recipeListReducer, recipeDetailsReducer } from './reducers/recipeReducers';
 import { foodsListReducer } from './reducers/foodReducers';
-import { userLoginReducer } from './reducers/userReducers';
+import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
 
 const reducer = combineReducers({
     recipeList: recipeListReducer,
     recipeDetails: recipeDetailsReducer,
     foodsList: foodsListReducer,
-    userLogin: userLoginReducer
+    userLogin: userLoginReducer,
+    userRegister: userRegisterReducer
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo') ?
