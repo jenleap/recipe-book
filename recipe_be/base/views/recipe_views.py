@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
 
-from base.models import Recipe
+from base.models import Recipe, Food, Ingredient
 from base.serializer import RecipeSerializer
 
 @api_view(['GET'])
@@ -17,4 +17,29 @@ def getRecipes(request):
 def getRecipe(request, pk):
     recipe = Recipe.objects.get(id=pk)
     serializer = RecipeSerializer(recipe, many=False)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def createRecipe(request):
+    data = request.data
+
+    ingredients = data['ingredients']
+
+    recipe = Recipe.objects.create(
+        name=data['name'],
+        description=data['description'],
+        servings=data['servings']
+    )
+
+    for i in ingredients:
+        food = Food.objects.get(id=i['foodId'])
+
+        ingredient = Ingredient.objects.create(
+            food=food,
+            recipe=recipe,
+            amount=i['amount']
+        )
+
+    serializer = RecipeSerializer(recipe, many=False)
+
     return Response(serializer.data)

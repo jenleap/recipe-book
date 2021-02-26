@@ -4,14 +4,16 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { recipeListReducer, recipeDetailsReducer } from './reducers/recipeReducers';
 import { foodsListReducer } from './reducers/foodReducers';
-import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
+import { userLoginReducer, userRegisterReducer, userProfileReducer, userUpdateReducer } from './reducers/userReducers';
 
 const reducer = combineReducers({
     recipeList: recipeListReducer,
     recipeDetails: recipeDetailsReducer,
     foodsList: foodsListReducer,
     userLogin: userLoginReducer,
-    userRegister: userRegisterReducer
+    userRegister: userRegisterReducer,
+    userProfile: userProfileReducer,
+    userUpdate: userUpdateReducer
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo') ?
