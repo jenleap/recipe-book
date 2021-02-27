@@ -55,22 +55,27 @@ class FoodSerializer(serializers.ModelSerializer):
         model = Food
         fields = '__all__'
 
+class FoodIngredientSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Food
+        fields = ['id', 'brand', 'name', 'measure']
+
 class IngredientSerializer(serializers.ModelSerializer):
     food = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Ingredient
-        fields = '__all__'
+        fields = ['amount', 'food']
 
     def get_food(self, obj):
         food = obj.food
-        serializer = FoodSerializer(food, many=False)
+        serializer = FoodIngredientSerializer(food, many=False)
         return serializer.data
 
-    def to_representation(self, instance):
+    """ def to_representation(self, instance):
         data = super().to_representation(instance)
         data['calories'] = instance.get_calories()
         data['carbs'] = instance.get_carbs()
         data['protein'] = instance.get_protein()
         data['fat'] = instance.get_fat()
-        return data
+        return data """
