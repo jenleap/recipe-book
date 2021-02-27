@@ -46,7 +46,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         
-        #data['nutri_info'] = instance.get_nutri_info()
+        data['nutri_info'] = instance.get_nutri_info()
         
         return data 
 

@@ -13,12 +13,21 @@ class Recipe(models.Model):
         return self.name
 
     def get_nutri_info(self):
-        nutri_info = object()
-        for i in self.recipe_ingredient:
+        nutri_info = {
+            "calories": 0,
+            "carbs": 0,
+            "protein": 0,
+            "fat": 0
+        }
+        for i in self.ingredient_set.all():
             nutri_info['calories'] += i.get_calories()
             nutri_info['carbs'] += i.get_carbs()
             nutri_info['protein'] += i.get_protein()
             nutri_info['fat'] += i.get_fat()
+
+        for k, v in nutri_info.items():
+            nutri_info[k] = round(v / self.servings)
+
         return nutri_info
 
 
