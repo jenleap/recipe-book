@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Row, Col, Image, ListGroup, Button, Card } from 'react-bootstrap';
+import { Row, Col, Image, ListGroup, Button, Card, Table } from 'react-bootstrap';
 
 import Loader from '../components/common/Loader';
 import Message from '../components/common/Message';
@@ -29,18 +29,28 @@ function FullRecipe({ match }) {
                                 <Card.Img src={ recipe.image } className="rounded-0" />
                                 <Card.Body>{ recipe.description }</Card.Body>
                             </Card>
+                            <Table>
+                                <thead>
+                                    <tr>Per serving</tr>
+                                </thead>
+                                <tbody>
+                                    { Object.keys(recipe.nutri_info).map(key => (
+                                        <tr>
+                                            <td>{ key }</td>
+                                            <td>{ recipe.nutri_info[key] }</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
                         </Col>
                         <Col md={6}>
+                            <h3>Ingredients</h3>
                             <ListGroup>
-                                <ListGroup.Item>
-                                    <p>1 tsp ingredient</p>
-                                </ListGroup.Item>
-                                <ListGroup.Item>
-                                    <p>1 tsp ingredient</p>
-                                </ListGroup.Item>
-                                <ListGroup.Item>
-                                    <p>1 tsp ingredient</p>
-                                </ListGroup.Item>
+                                { recipe.ingredients.map(i => (
+                                    <ListGroup.Item>
+                                        <p>{ i.amount } { i.food.measure } { i.food.name }</p>
+                                    </ListGroup.Item>
+                                ))}
                             </ListGroup>
                         </Col>
                     </Row>
