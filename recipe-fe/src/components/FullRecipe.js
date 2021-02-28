@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Row, Col, Image, ListGroup, Button, Card, Table } from 'react-bootstrap';
 
 import Loader from '../components/common/Loader';
@@ -33,25 +32,25 @@ function FullRecipe({ match }) {
                                 <thead>
                                     <tr>Per serving</tr>
                                 </thead>
-                                <tbody>
+                                {/* <tbody>
                                     { Object.keys(recipe.nutri_info).map(key => (
                                         <tr>
                                             <td>{ key }</td>
                                             <td>{ recipe.nutri_info[key] }</td>
                                         </tr>
                                     ))}
-                                </tbody>
+                                </tbody> */}
                             </Table>
                         </Col>
                         <Col md={6}>
                             <h3>Ingredients</h3>
-                            <ListGroup>
+                            {/* <ListGroup>
                                 { recipe.ingredients.map(i => (
                                     <ListGroup.Item>
                                         <p>{ i.amount } { i.food.measure } { i.food.name }</p>
                                     </ListGroup.Item>
                                 ))}
-                            </ListGroup>
+                            </ListGroup> */}
                         </Col>
                     </Row>
             }

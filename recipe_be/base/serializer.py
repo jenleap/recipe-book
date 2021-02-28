@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Recipe, Food, Ingredient
+from .models import Recipe, Food, Ingredient, Step
 
 class UserSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField(read_only=True)
@@ -33,6 +33,7 @@ class UserSerializerWithToken(UserSerializer):
 
 class RecipeSerializer(serializers.ModelSerializer):
     ingredients = serializers.SerializerMethodField(read_only=True)
+    steps = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Recipe
@@ -41,6 +42,11 @@ class RecipeSerializer(serializers.ModelSerializer):
     def get_ingredients(self, obj):
         ingredients = obj.ingredient_set.all()
         serializer = IngredientSerializer(ingredients, many=True)
+        return serializer.data
+
+    def get_steps(self, obj):
+        steps = obj.step_set.all()
+        serializer = StepSerializer(steps, many=True)
         return serializer.data
 
     def to_representation(self, instance):
@@ -79,3 +85,8 @@ class IngredientSerializer(serializers.ModelSerializer):
         data['protein'] = instance.get_protein()
         data['fat'] = instance.get_fat()
         return data """
+
+class StepSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Step
+        fields = '__all__'

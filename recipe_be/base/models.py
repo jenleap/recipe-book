@@ -64,3 +64,9 @@ class Ingredient(models.Model):
 
     def get_fat(self):
         return (self.food.amount * self.amount) * self.food.fat
+
+class Step(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.SET_NULL, null=True)
+    description = models.TextField(null=True)
+    order = models.IntegerField()
+    
