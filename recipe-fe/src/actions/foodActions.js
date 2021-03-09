@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FOOD_LIST_REQUEST, FOOD_LIST_SUCCESS, FOOD_LIST_FAILURE } from '../constants/foodConstants';
+import { FOOD_LIST_REQUEST, FOOD_LIST_SUCCESS, FOOD_LIST_FAILURE, FOOD_LIST_RESET } from '../constants/foodConstants';
 
 export const getFoods = () => (dispatch) => {
     dispatch({
@@ -21,4 +21,10 @@ export const getFoods = () => (dispatch) => {
                     : err.message
                 });
             });
+}
+
+export const clearFoodsList = () => (dispatch) => {
+    dispatch({
+        type: FOOD_LIST_RESET
+    });
 }

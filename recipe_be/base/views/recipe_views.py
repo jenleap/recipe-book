@@ -51,3 +51,55 @@ def createRecipe(request):
     serializer = RecipeSerializer(recipe, many=False)
 
     return Response(serializer.data)
+
+@api_view(['PUT'])
+def updateRecipe(request, pk):
+    data = request.data
+    recipe = Recipe.objects.get(id=pk)
+
+    recipe.name = data['name']
+    recipe.description = data['description']
+    recipe.servings = data['servings']
+
+    recipe.save()
+
+    ingredients = data['ingredients']
+    steps = data['steps']
+
+    if ingredients:
+        for i in ingredients:
+            ingredient = Ingredient.objects.get(id=i['id'])
+
+            ingredient.amount = i['amount']
+
+            ingredient.save()
+
+    if steps:
+        for s in steps:
+            step = Step.objects.get(id=s['id'])
+
+            step.description = s['description']
+            step.order = s['order']
+
+            step.save()
+
+    serializer = RecipeSerializer(recipe, many=False)
+    return Response(serializer.data)
+
+@api_view(['DELETE'])
+def deleteRecipe(request, pk):
+    recipe = Recipe.objects.get(id=pk)
+    recipe.delete()
+    return Response("Recipe deleted.")
+
+@api_view(['DELETE'])
+def deleteIngredient(request, pk):
+    ingredient = Ingredient.objects.get(id=pk)
+    ingredient.delete()
+    return Response("Ingredient deleted.")
+
+@api_view(['DELETE'])
+def deleteStep(request, pk):
+    step = Step.objects.get(id=pk)
+    step.delete()
+    return Response("Step deleted.")

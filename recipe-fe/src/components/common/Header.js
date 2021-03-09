@@ -29,9 +29,6 @@ function Header() {
                             <LinkContainer to="/">
                                 <Nav.Link>Home</Nav.Link>
                             </LinkContainer>
-                            <LinkContainer to="/recipe/create">
-                                <Nav.Link>Create</Nav.Link>
-                            </LinkContainer>
 
                             { userInfo ? (
                                 <NavDropdown title={ userInfo.name } id="username">
@@ -46,6 +43,14 @@ function Header() {
                                     <Nav.Link><i className="fas fa-user mr-1"></i>Login</Nav.Link>
                                 </LinkContainer>
                             )}
+
+                            { (userInfo && userInfo.isAdmin) ? (
+                                <NavDropdown title="Admin" id="admin-menu">
+                                    <LinkContainer to="/recipe/create">
+                                        <Nav.Link>Create Recipe</Nav.Link>
+                                    </LinkContainer>
+                                </NavDropdown>
+                            ) : null }
                         </Nav> 
                     </Navbar.Collapse>
                 </Container>

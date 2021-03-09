@@ -2,13 +2,14 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { recipeListReducer, recipeDetailsReducer } from './reducers/recipeReducers';
+import { recipeListReducer, recipeDetailsReducer, recipeCreateReducer } from './reducers/recipeReducers';
 import { foodsListReducer } from './reducers/foodReducers';
 import { userLoginReducer, userRegisterReducer, userProfileReducer, userUpdateReducer } from './reducers/userReducers';
 
 const reducer = combineReducers({
     recipeList: recipeListReducer,
     recipeDetails: recipeDetailsReducer,
+    recipeCreate: recipeCreateReducer,
     foodsList: foodsListReducer,
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,

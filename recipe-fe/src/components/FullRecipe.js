@@ -28,29 +28,30 @@ function FullRecipe({ match }) {
                                 <Card.Img src={ recipe.image } className="rounded-0" />
                                 <Card.Body>{ recipe.description }</Card.Body>
                             </Card>
+                            <h4>Nutritional Info</h4>
+                            <p>Per serving</p>
                             <Table>
-                                <thead>
-                                    <tr>Per serving</tr>
-                                </thead>
-                                {/* <tbody>
-                                    { Object.keys(recipe.nutri_info).map(key => (
-                                        <tr>
-                                            <td>{ key }</td>
-                                            <td>{ recipe.nutri_info[key] }</td>
+                                <tbody>
+                                    { (recipe.nutri_info) ? (Object.keys(recipe.nutri_info).map(nutrient => (
+                                        <tr key={ nutrient }>
+                                            <td>{ nutrient }</td>
+                                            <td>{ recipe.nutri_info[nutrient] }</td>
                                         </tr>
-                                    ))}
-                                </tbody> */}
+                                    ))) : (
+                                        <tr></tr>
+                                    )}
+                                </tbody>
                             </Table>
                         </Col>
                         <Col md={6}>
                             <h3>Ingredients</h3>
-                            {/* <ListGroup>
-                                { recipe.ingredients.map(i => (
+                            <ListGroup>
+                                { (recipe.ingredients) ? (recipe.ingredients.map(i => (
                                     <ListGroup.Item>
                                         <p>{ i.amount } { i.food.measure } { i.food.name }</p>
                                     </ListGroup.Item>
-                                ))}
-                            </ListGroup> */}
+                                ))) : null}
+                            </ListGroup>
                         </Col>
                     </Row>
             }
