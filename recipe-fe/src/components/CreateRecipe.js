@@ -15,6 +15,7 @@ function CreateRecipe({ history }) {
     const [servings, setServings] = useState('');
     const [ingredients, setIngredients] = useState([]);
     const [steps, setSteps] = useState([]);
+    const [image, setImage] = useState(undefined);
 
     const dispatch = useDispatch();
     const userLogin = useSelector(state => state.userLogin);
@@ -56,6 +57,11 @@ function CreateRecipe({ history }) {
         setActiveStep('');
     }
 
+    const uploadFileHandler = (e) => {
+        const file = e.target.files[0];
+        setImage(file);
+    }
+
     const createRecipeHandler = (e) => {
         e.preventDefault();
 
@@ -67,8 +73,15 @@ function CreateRecipe({ history }) {
             'steps': steps
         };
 
-        console.log("sending recipe", recipe);
-        dispatch(createRecipe(recipe));
+        const data = new FormData();
+        data.append("recipe", JSON.stringify(recipe))
+
+        if (image) {
+            data.append("image", image);
+        }
+
+        dispatch(createRecipe(data));
+        console.log("sending recipe", data);
         // history.push(`/recipes/${id}`);
     }
 
@@ -101,7 +114,11 @@ function CreateRecipe({ history }) {
                         </Form.Group>
 
                         <Form.Group>
-                            <Form.File label="Recipe photo" />
+                            <Form.File 
+                                label="Recipe photo"
+                                id="image-file"
+                                custom
+                                onChange={uploadFileHandler} />
                         </Form.Group>
 
                         <h3>Ingredients <span onClick={() => showFoodSelector(true)}><i className="fas fa-plus ml-5"></i></span></h3>
