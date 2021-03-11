@@ -59,7 +59,7 @@ function FoodSelector({ selectFood }) {
                                 onChange={(e) => setQuery(e.target.value)}>    
                             </Form.Control>
                         </Col>
-                        <Button variant="primary" onClick={searchFoods}><i class="fas fa-search"></i></Button>
+                        <Button variant="primary" onClick={searchFoods}><i className="fas fa-search"></i></Button>
                     </Row>
                     { (foods) ? 
                     <Col>

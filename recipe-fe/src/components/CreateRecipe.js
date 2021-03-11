@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Image, ListGroup, Button, Form } from 'react-bootstrap';
-
+import { Row, Col, Image, ListGroup, Button, Form, Card } from 'react-bootstrap';
 
 import { createRecipe } from '../actions/recipeActions';
 import FoodSelector from './common/FoodSelector';
 
 function CreateRecipe({ history }) {
     const [foodSelector, showFoodSelector] = useState(false);
+    const [stepCreator, showStepCreator] = useState(false);
+    const [activeStep, setActiveStep] = useState('');
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [servings, setServings] = useState('');
     const [ingredients, setIngredients] = useState([]);
+    const [steps, setSteps] = useState([]);
 
     const dispatch = useDispatch();
     const userLogin = useSelector(state => state.userLogin);
@@ -24,23 +26,34 @@ function CreateRecipe({ history }) {
         } else {
             history.push('/');
         }
-    }, [ dispatch, userInfo, history ]);
+    }, [ userInfo, history ]);
 
     const addIngredient = (food) => {
         setIngredients([
             ...ingredients,
             food
         ]);
-        console.log(food);
+        //showFoodSelector(false);
     }
 
     const convertIngredients = () => {
         return ingredients.map(i => {
             return {
                 'foodId': i.id,
-                'amount': i.amount
+                'amount': parseFloat(i.amount)
             }
         });
+    }
+
+    const addStep = () => {
+        setSteps([
+            ...steps,
+            {
+                description: activeStep,
+                order: steps.length + 1
+            }
+        ]);
+        setActiveStep('');
     }
 
     const createRecipeHandler = (e) => {
@@ -49,11 +62,13 @@ function CreateRecipe({ history }) {
         const recipe = {
             'name': name,
             'description': description,
-            'servings': servings,
-            'ingredients': convertIngredients()
+            'servings': parseInt(servings),
+            'ingredients': convertIngredients(),
+            'steps': steps
         };
 
         console.log("sending recipe", recipe);
+        dispatch(createRecipe(recipe));
         // history.push(`/recipes/${id}`);
     }
 
@@ -99,6 +114,30 @@ function CreateRecipe({ history }) {
                             </ListGroup>
 
                         { (foodSelector) ? <FoodSelector selectFood={addIngredient} /> : null }
+
+                        <h3>Steps <span onClick={() => showStepCreator(true)}><i className="fas fa-plus ml-5"></i></span></h3>
+                            <ListGroup>
+                                { (steps) ? (steps.map(s => (
+                                    <ListGroup.Item key={s.order}>
+                                        <p>{s.order}. { s.description }</p>
+                                    </ListGroup.Item>
+                                ))) : null}
+                            </ListGroup>
+
+                        { (stepCreator) ? (
+                            <Card className="p-2 mt-3 mb-3">
+                                <Row className="mb-3">
+                                    <Col>
+                                        <Form.Control 
+                                            type="text"
+                                            value={ activeStep }
+                                            onChange={(e) => setActiveStep(e.target.value)}>    
+                                        </Form.Control>
+                                    </Col>
+                                    <Button variant="primary" className="mr-4" onClick={addStep}>Add</Button>
+                                </Row>
+                            </Card>
+                        ) : null }
                         
 
                         <Button 

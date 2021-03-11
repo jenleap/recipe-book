@@ -22,33 +22,43 @@ function FullRecipe({ match }) {
                 : error ? <Message variant="danger">{ error }</Message>
                     :
                     <Row>
-                        <Col md={6}>
+                        <Col md={4}>
                             <Card>
                                 <Card.Header>{ recipe.name }</Card.Header>
                                 <Card.Img src={ recipe.image } className="rounded-0" />
                                 <Card.Body>{ recipe.description }</Card.Body>
                             </Card>
-                            <h4>Nutritional Info</h4>
-                            <p>Per serving</p>
-                            <Table>
-                                <tbody>
-                                    { (recipe.nutri_info) ? (Object.keys(recipe.nutri_info).map(nutrient => (
-                                        <tr key={ nutrient }>
-                                            <td>{ nutrient }</td>
-                                            <td>{ recipe.nutri_info[nutrient] }</td>
-                                        </tr>
-                                    ))) : (
-                                        <tr></tr>
-                                    )}
-                                </tbody>
-                            </Table>
+                            <Card className="p-2 mt-3">
+                                <h4>Nutritional Info</h4>
+                                <p>Per serving</p>
+                                <Table>
+                                    <tbody>
+                                        { (recipe.nutri_info) ? (Object.keys(recipe.nutri_info).map(nutrient => (
+                                            <tr key={ nutrient }>
+                                                <td>{ nutrient }</td>
+                                                <td>{ recipe.nutri_info[nutrient] }</td>
+                                            </tr>
+                                        ))) : (
+                                            <tr></tr>
+                                        )}
+                                    </tbody>
+                                </Table>
+                            </Card>
                         </Col>
-                        <Col md={6}>
+                        <Col md={8}>
                             <h3>Ingredients</h3>
                             <ListGroup>
                                 { (recipe.ingredients) ? (recipe.ingredients.map(i => (
                                     <ListGroup.Item>
-                                        <p>{ i.amount } { i.food.measure } { i.food.name }</p>
+                                        <p className="text-lowercase">{ i.amount } { i.food.measure } { i.food.name }</p>
+                                    </ListGroup.Item>
+                                ))) : null}
+                            </ListGroup>
+                            <h3>Steps</h3>
+                            <ListGroup>
+                                { (recipe.steps) ? (recipe.steps.map(s => (
+                                    <ListGroup.Item>
+                                        <p>{ s.order }. { s.description }</p>
                                     </ListGroup.Item>
                                 ))) : null}
                             </ListGroup>

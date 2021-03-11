@@ -63,7 +63,7 @@ export const createRecipe = (recipeData) => (dispatch, getState) => {
         }
     };
 
-    axios.post(`/api/recipes/create`, recipeData, config)
+    axios.post(`/api/recipes/create/`, recipeData, config)
             .then(res => {
                 dispatch({
                     type: RECIPE_CREATE_SUCCESS,
