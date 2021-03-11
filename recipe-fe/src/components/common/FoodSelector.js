@@ -28,7 +28,7 @@ function FoodSelector({ selectFood }) {
     }
 
     const searchFoods = () => {
-        dispatch(getFoods()); 
+        dispatch(getFoods(query)); 
     }
 
     return (

@@ -49,7 +49,7 @@ function FullRecipe({ match }) {
                             <h3>Ingredients</h3>
                             <ListGroup>
                                 { (recipe.ingredients) ? (recipe.ingredients.map(i => (
-                                    <ListGroup.Item>
+                                    <ListGroup.Item key={i.id}>
                                         <p className="text-lowercase">{ i.amount } { i.food.measure } { i.food.name }</p>
                                     </ListGroup.Item>
                                 ))) : null}
@@ -57,7 +57,7 @@ function FullRecipe({ match }) {
                             <h3>Steps</h3>
                             <ListGroup>
                                 { (recipe.steps) ? (recipe.steps.map(s => (
-                                    <ListGroup.Item>
+                                    <ListGroup.Item key={s.id}>
                                         <p>{ s.order }. { s.description }</p>
                                     </ListGroup.Item>
                                 ))) : null}

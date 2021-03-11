@@ -9,6 +9,7 @@ from base.serializer import FoodSerializer
 
 @api_view(['GET'])
 def getFoods(request):
-    foods = Food.objects.all()
+    query = request.query_params.get('q')
+    foods = Food.objects.filter(name__icontains=query)
     serializer = FoodSerializer(foods, many=True)
     return Response(serializer.data)

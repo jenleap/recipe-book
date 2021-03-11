@@ -1,12 +1,14 @@
 import axios from 'axios';
 import { FOOD_LIST_REQUEST, FOOD_LIST_SUCCESS, FOOD_LIST_FAILURE, FOOD_LIST_RESET } from '../constants/foodConstants';
 
-export const getFoods = () => (dispatch) => {
+export const getFoods = (query = '') => (dispatch) => {
     dispatch({
         type: FOOD_LIST_REQUEST
     });
 
-    axios.get('/api/foods/')
+    console.log(query);
+
+    axios.get(`/api/foods?q=${query}`)
             .then(res => {
                 dispatch({
                     type: FOOD_LIST_SUCCESS,

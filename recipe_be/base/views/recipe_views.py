@@ -4,7 +4,6 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
 import json
-import ast
 
 from base.models import Recipe, Food, Ingredient, Step
 from base.serializer import RecipeSerializer
@@ -23,15 +22,9 @@ def getRecipe(request, pk):
 
 @api_view(['POST'])
 def createRecipe(request):
-    rawData = request.data.copy()
-    recipeData = rawData['recipe']
-    print(recipeData)
-    print(type(recipeData))
+    recipeData = request.data['recipe']
 
-    data = ast.literal_eval(recipeData)
-
-    print(type(data))
-    print(data)
+    data = json.loads(recipeData)
 
     ingredients = data['ingredients']
     steps = data['steps']
