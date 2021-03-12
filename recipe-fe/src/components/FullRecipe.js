@@ -4,6 +4,7 @@ import { Row, Col, Image, ListGroup, Button, Card, Table } from 'react-bootstrap
 
 import Loader from '../components/common/Loader';
 import Message from '../components/common/Message';
+import FractionDisplay from '../components/common/FractionDisplay';
 
 import { getRecipe } from '../actions/recipeActions';
 
@@ -50,7 +51,9 @@ function FullRecipe({ match }) {
                             <ListGroup>
                                 { (recipe.ingredients) ? (recipe.ingredients.map(i => (
                                     <ListGroup.Item key={i.id}>
-                                        <p className="text-lowercase">{ i.amount } { i.food.measure } { i.food.name }</p>
+                                        <p className="text-lowercase">
+                                            <FractionDisplay decimalNum={i.amount}/> 
+                                            &nbsp; { i.food.measure } { i.food.name }</p>
                                     </ListGroup.Item>
                                 ))) : null}
                             </ListGroup>

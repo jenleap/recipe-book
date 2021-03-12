@@ -4,6 +4,7 @@ import { Row, Col, Image, ListGroup, Button, Form, Card } from 'react-bootstrap'
 
 import { createRecipe } from '../actions/recipeActions';
 import FoodSelector from './common/FoodSelector';
+import FractionDisplay from '../components/common/FractionDisplay';
 
 function CreateRecipe({ history }) {
     const [foodSelector, showFoodSelector] = useState(false);
@@ -134,7 +135,9 @@ function CreateRecipe({ history }) {
                             <ListGroup>
                                 { (ingredients) ? (ingredients.map(i => (
                                     <ListGroup.Item key={i.id}>
-                                        <p className="text-lowercase">{ i.amount } { i.measure } { i.name }</p>
+                                        <p className="text-lowercase">
+                                            <FractionDisplay decimalNum={i.amount} />
+                                            &nbsp; { i.measure } { i.name }</p>
                                     </ListGroup.Item>
                                 ))) : null}
                             </ListGroup>

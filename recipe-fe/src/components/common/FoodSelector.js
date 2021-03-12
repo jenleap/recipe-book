@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Form, Button, Card } from 'react-bootstrap';
 
+import FractionDisplay from '../common/FractionDisplay';
+import FractionSelect from '../common/FractionSelect';
+
 import { getFoods, clearFoodsList } from '../../actions/foodActions';
 
 function FoodSelector({ selectFood }) {
@@ -35,13 +38,10 @@ function FoodSelector({ selectFood }) {
         <Card className="p-2 mt-3 mb-3">
             {(selectedFood) ? (
                 <Row>
-                    <Col xs={2}>
-                        <Form.Control 
-                            type="number"
-                            value={ selectedFood.amount }
-                            onChange={(e) => updateFood(e.target.value)}>    
-                        </Form.Control>
-                    </Col>
+                    <FractionSelect 
+                        decimalNum={ selectedFood.amount }
+                        amountChanged={updateFood}
+                    />
                     <Col>
                         <Row className="justify-content-between">
                             <span className="mt-1 text-lowercase"> {selectedFood.measure} {selectedFood.name} </span>
@@ -65,7 +65,9 @@ function FoodSelector({ selectFood }) {
                     <Col>
                         { foods.map(f => (
                             <Row key={f.id}>
-                                <span className="text-lowercase" onClick={() => chooseFood(f)}>{ f.amount } { f.measure } { f.name }</span>
+                                <span className="text-lowercase" onClick={() => chooseFood(f)}>
+                                    <FractionDisplay decimalNum={f.amount} />
+                                    &nbsp; { f.measure } { f.name }</span>
                             </Row>
                         ))}
                     </Col>
