@@ -9,7 +9,7 @@ function RecipeItem({ recipe }) {
                 <Card.Img src={ recipe.image } />
             </Link>
             <Card.Body>
-                <Link to={`/recipe/${recipe.id}`}>
+                <Link to={`/recipes/${recipe.id}`}>
                     <Card.Title as='div'>
                         <strong>{ recipe.name }</strong>
                     </Card.Title>

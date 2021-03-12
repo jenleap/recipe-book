@@ -21,7 +21,7 @@ function App() {
           <Route path='/login' component={ Login } />
           <Route path='/register' component={ Register } />
           <Route path='/profile' component={ Profile } />
-          <Route path='/recipe/:id' component={ FullRecipe } />
+          <Route path='/recipes/:id' component={ FullRecipe } />
           <Route path='/recipe/create' component={ CreateRecipe } />
         </Container>
       </main>
