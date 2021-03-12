@@ -16,6 +16,7 @@ function CreateRecipe({ history }) {
     const [ingredients, setIngredients] = useState([]);
     const [steps, setSteps] = useState([]);
     const [image, setImage] = useState(undefined);
+    const [imagePreview, setImagePreview] = useState(undefined);
 
     const dispatch = useDispatch();
     const userLogin = useSelector(state => state.userLogin);
@@ -60,6 +61,12 @@ function CreateRecipe({ history }) {
     const uploadFileHandler = (e) => {
         const file = e.target.files[0];
         setImage(file);
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            setImagePreview(reader.result);
+        };
+        reader.readAsDataURL(file);
     }
 
     const createRecipeHandler = (e) => {
@@ -113,7 +120,9 @@ function CreateRecipe({ history }) {
                                 onChange={(e) => setServings(e.target.value)}/>
                         </Form.Group>
 
-                        <Form.Group>
+                        { (imagePreview) ? <img src={imagePreview} className="w-25" /> : null }
+
+                        <Form.Group className="mt-3">
                             <Form.File 
                                 label="Recipe photo"
                                 id="image-file"
