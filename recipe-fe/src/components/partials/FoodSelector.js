@@ -30,8 +30,8 @@ function FoodSelector({ selectFood }) {
         setFood(undefined);
     }
 
-    const searchFoods = (page = 1) => {
-        dispatch(getFoods(query, page)); 
+    const searchFoods = (selectedPage = 1) => {
+        dispatch(getFoods(query, selectedPage)); 
     }
 
     return (
@@ -59,7 +59,7 @@ function FoodSelector({ selectFood }) {
                                 onChange={(e) => setQuery(e.target.value)}>    
                             </Form.Control>
                         </Col>
-                        <Button variant="primary" onClick={searchFoods}><i className="fas fa-search"></i></Button>
+                        <Button variant="primary" onClick={() => searchFoods()}><i className="fas fa-search"></i></Button>
                     </Row>
                     { (foods) ? 
                     <Col>

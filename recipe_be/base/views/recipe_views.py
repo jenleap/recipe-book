@@ -11,9 +11,30 @@ from base.serializer import RecipeSerializer
 
 @api_view(['GET'])
 def getRecipes(request):
-    recipes = Recipe.objects.all()
+    query = request.query_params.get('q')
+    recipes = Recipe.objects.filter(name__icontains=query)
+
+    page = request.query_params.get('page')
+    paginator = Paginator(recipes, 3)
+
+    try:
+        recipes = paginator.page(page)
+    except PageNotAnInteger:
+        recipes = paginator.page(1)
+    except EmptyPage:
+        recipes = paginator.page(paginator.num_pages)
+
+    if page == None:
+        page = 1
+
+    page = int(page)
+
     serializer = RecipeSerializer(recipes, many=True)
-    return Response(serializer.data)
+    return Response({
+        'recipes': serializer.data,
+        'page': page,
+        'totalPages': paginator.num_pages
+    })
 
 @api_view(['GET'])
 def getRecipe(request, pk):

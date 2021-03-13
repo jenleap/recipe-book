@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Image, ListGroup, Button, Form, Card } from 'react-bootstrap';
 
 import { createRecipe } from '../actions/recipeActions';
-import FoodSelector from './common/FoodSelector';
+import FoodSelector from './partials/FoodSelector';
 import FractionDisplay from '../components/common/FractionDisplay';
 
 function CreateRecipe({ history }) {

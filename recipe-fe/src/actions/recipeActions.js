@@ -3,12 +3,12 @@ import { RECIPE_LIST_REQUEST, RECIPE_LIST_SUCCESS, RECIPE_LIST_FAILURE,
     RECIPE_DETAILS_REQUEST, RECIPE_DETAILS_SUCCESS, RECIPE_DETAILS_FAILURE,
     RECIPE_CREATE_REQUEST, RECIPE_CREATE_SUCCESS, RECIPE_CREATE_FAILURE, RECIPE_CREATE_RESET } from '../constants/recipeConstants';
 
-export const getRecipes = () => (dispatch) => {
+export const getRecipes = (query = '', page = 1) => (dispatch) => {
     dispatch({
         type: RECIPE_LIST_REQUEST
     });
 
-    axios.get('/api/recipes/')
+    axios.get(`/api/recipes?q=${query}&page=${page}`)
             .then(res => {
                 dispatch({
                     type: RECIPE_LIST_SUCCESS,
