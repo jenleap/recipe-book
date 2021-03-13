@@ -4,6 +4,7 @@ import { Row, Col, Form, Button, Card } from 'react-bootstrap';
 
 import FractionDisplay from '../common/FractionDisplay';
 import FractionSelect from '../common/FractionSelect';
+import Paginate from '../common/Paginate';
 
 import { getFoods, clearFoodsList } from '../../actions/foodActions';
 
@@ -13,7 +14,7 @@ function FoodSelector({ selectFood }) {
 
     const dispatch = useDispatch();
     const foodsList = useSelector(state => state.foodsList);
-    const { loading, error, foods } = foodsList;
+    const { loading, error, foods, page, totalPages } = foodsList;
 
     const chooseFood = (food) => {
         setFood(food);
@@ -22,7 +23,6 @@ function FoodSelector({ selectFood }) {
 
     const updateFood = (amount) => {
         selectedFood.amount = amount;
-        console.log(amount);
     }
 
     const addFood = () => {
@@ -30,8 +30,8 @@ function FoodSelector({ selectFood }) {
         setFood(undefined);
     }
 
-    const searchFoods = () => {
-        dispatch(getFoods(query)); 
+    const searchFoods = (page = 1) => {
+        dispatch(getFoods(query, page)); 
     }
 
     return (
@@ -70,6 +70,11 @@ function FoodSelector({ selectFood }) {
                                     &nbsp; { f.measure } { f.name }</span>
                             </Row>
                         ))}
+                        <Paginate 
+                            totalPages={totalPages}
+                            page={page}
+                            itemCall={searchFoods}
+                        />
                     </Col>
                  : null}
                 </Col>

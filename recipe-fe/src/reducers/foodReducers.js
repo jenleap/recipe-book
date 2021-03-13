@@ -10,7 +10,9 @@ export const foodsListReducer = (state = { foods: []}, action) => {
         case FOOD_LIST_SUCCESS:
             return {
                 loading: false,
-                foods: action.payload
+                foods: action.payload.foods,
+                page: action.payload.page,
+                totalPages: action.payload.totalPages
             }
         case FOOD_LIST_FAILURE:
             return {
