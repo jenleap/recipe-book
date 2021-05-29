@@ -9,9 +9,14 @@ function FractionDisplay({ decimalNum }) {
     })
 
     const convertDecimalToFraction = () => {
-        setWholeNum(Math.floor(decimalNum));
+        const convertWhole = Math.floor(decimalNum);
+        if (convertWhole > 0) {
+            setWholeNum(convertWhole);
+        } else {
+            setWholeNum('');
+        }
 
-        const fracNum = decimalNum - wholeNum;
+        const fracNum = decimalNum - convertWhole;
 
         switch(fracNum) {
             case 0.25:

@@ -16,6 +16,7 @@ function Home() {
 
     useEffect(() => {
         dispatch(getRecipes());
+        console.log(recipes);
     }, [dispatch]);
 
     const searchRecipes = (selectedPage = 1) => {

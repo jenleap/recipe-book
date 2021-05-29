@@ -89,8 +89,7 @@ function CreateRecipe({ history }) {
         }
 
         dispatch(createRecipe(data));
-        console.log("sending recipe", data);
-        // history.push(`/recipes/${id}`);
+        history.push(`/`);
     }
 
     return (

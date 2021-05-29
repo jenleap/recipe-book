@@ -7,22 +7,22 @@ function FractionSelect({ decimalNum, amountChanged }) {
 
     useEffect(() => {
         convertDecimal();
-    })
+    }, []);
 
     const convertDecimal = () => {
         setWholeNum(Math.floor(decimalNum));
-        setDecNum(decimalNum - wholeNum);
+        setDecNum(decimalNum - Math.floor(decimalNum));
     }
 
     const updateWhole = (e) => {
         setWholeNum(e);
-        amountChanged(parseFloat(e) + decNum);
+        console.log(e, decimalNum);
+        amountChanged(parseFloat(e) + parseFloat(decNum));
     }
 
     const updateFraction = (e) => {
         setDecNum(e);
-        amountChanged(wholeNum + parseFloat(e));
-        console.log(e);
+        amountChanged(parseFloat(wholeNum) + parseFloat(e));
     }
 
     return (
