@@ -7,6 +7,8 @@ class Recipe(models.Model):
     image = models.ImageField(null=True, blank=True)
     description = models.TextField(null=True)
     servings = models.IntegerField()
+    #recipe_yield = models.IntegerField(null=True)
+    #yield_measure = models.CharField(max_length=50, null=True)
     createdAt = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -54,16 +56,16 @@ class Ingredient(models.Model):
         return str(self.food.name)
 
     def get_calories(self):
-        return (self.food.amount * self.amount) * self.food.calories
+        return self.amount * (self.food.calories / self.food.amount)
 
     def get_protein(self):
-        return (self.food.amount * self.amount) * self.food.protein
+        return self.amount * (self.food.protein / self.food.amount)
 
     def get_carbs(self):
-        return (self.food.amount * self.amount) * self.food.carbs
+        return self.amount * (self.food.carbs / self.food.amount)
 
     def get_fat(self):
-        return (self.food.amount * self.amount) * self.food.fat
+        return self.amount * (self.food.fat / self.food.amount)
 
 class Step(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.SET_NULL, null=True)
